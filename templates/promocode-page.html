@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввод промокода - Мой Банк</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f3f4f6;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .promo-input-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .promo-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-transform: uppercase;
+            transition: border-color 0.3s;
+        }
+
+        .promo-input:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Введите промокод</h2>
+        <div class="promo-input-container">
+            <input type="text" class="promo-input" maxlength="1" id="input1" oninput="moveFocus(this, 'input2')" />
+            <input type="text" class="promo-input" maxlength="1" id="input2" oninput="moveFocus(this, 'input3')" />
+            <input type="text" class="promo-input" maxlength="1" id="input3" oninput="moveFocus(this, 'input4')" />
+            <input type="text" class="promo-input" maxlength="1" id="input4" oninput="moveFocus(this, 'input5')" />
+            <input type="text" class="promo-input" maxlength="1" id="input5" oninput="moveFocus(this, 'input6')" />
+            <input type="text" class="promo-input" maxlength="1" id="input6" />
+        </div>
+        <button class="button" onclick="checkPromoCode()">Применить</button>
+        <p id="error-message" class="error"></p>
+    </div>
+
+    <script>
+        function moveFocus(currentInput, nextInputId) {
+            // Переводим символ в верхний регистр
+            currentInput.value = currentInput.value.toUpperCase();
+
+            // Если текущий input заполнен, переходим к следующему
+            if (currentInput.value.length === 1 && nextInputId) {
+                document.getElementById(nextInputId).focus();
+            }
+        }
+
+        function checkPromoCode() {
+            // Получаем значение промокода
+            const promoCode = [
+                document.getElementById('input1').value,
+                document.getElementById('input2').value,
+                document.getElementById('input3').value,
+                document.getElementById('input4').value,
+                document.getElementById('input5').value,
+                document.getElementById('input6').value
+            ].join('');
+
+            var errorMessage = document.getElementById('error-message');
+
+            // Проверяем длину промокода
+            if (promoCode.length !== 6) {
+                errorMessage.textContent = 'Промокод должен состоять ровно из 6 символов!';
+            } else {
+                errorMessage.textContent = '';
+                alert('Промокод принят: ' + promoCode);
+                // Здесь можно добавить логику для применения промокода
+            }
+        }
+    </script>
+</body>
+</html>
